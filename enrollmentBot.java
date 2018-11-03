@@ -1,20 +1,38 @@
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import java.net.URL;
-
+//import org.openqa.selenium.firefox.FirefoxDriver;
+//comment the above line and uncomment below line to use Chrome
+import org.openqa.selenium.chrome.ChromeDriver;
 public class enrollmentBot {
-    public static final String USERNAME = "YOUR_USERNAME";
-    public static final String ACCESS_KEY = "YOUR_ACCESS_KEY";
-    public static final String URL = "http://" + USERNAME + ":" + ACCESS_KEY + "@ondemand.saucelabs.com:80/wd/hub";
+    public static void main(String[] args) {
+        // declaration and instantiation of objects/variables
+        //WebDriver driver = new FirefoxDriver();
+        //comment the above 2 lines and uncomment below 2 lines to use Chrome
+        System.setProperty("webdriver.chrome.driver","chromedriver/chromedriver.exe");
+        WebDriver driver = new ChromeDriver();
 
-    public static void main(String[] args) throws Exception {
+        String baseUrl = "http://demo.guru99.com/test/newtours/";
+        String expectedTitle = "Welcome: Mercury Tours";
+        String actualTitle = "";
 
-        DesiredCapabilities caps = DesiredCapabilities.chrome();
-        caps.setCapability("platform", "Windows XP");
-        caps.setCapability("version", "43.0");
+        // launch Fire fox and direct it to the Base URL
+        driver.get(baseUrl);
 
-        WebDriver driver = new RemoteWebDriver(new URL(URL), caps);
+        // get the actual value of the title
+        actualTitle = driver.getTitle();
+
+        /*
+         * compare the actual title of the page with the expected one and print
+         * the result as "Passed" or "Failed"
+         */
+        if (actualTitle.contentEquals(expectedTitle)){
+            System.out.println("Test Passed!");
+        } else {
+            System.out.println("Test Failed");
+        }
+
+        //close Fire fox
+        driver.close();
+
     }
-}
 
+}
