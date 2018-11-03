@@ -15,7 +15,7 @@ import org.junit.Assert.*;
 import com.techventus.server.voice.Voice;
 
 
-public class enrollmentBot {
+public class loginBot {
     public static void main(String[] args) {
         // declaration and instantiation of objects/variables
         //WebDriver driver = new FirefoxDriver();
@@ -25,34 +25,27 @@ public class enrollmentBot {
         WebDriver driver = new ChromeDriver();
         WebDriverWait wait = new WebDriverWait(driver, 10);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        String baseUrl = "https://calcentral.berkeley.edu/academics";
+        String baseUrl = "https://calcentral.berkeley.edu";
 
         // launch chrome and direct it to the Base URL
         driver.get(baseUrl);
 
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         //LOGIN
-        try {
-            WebElement username = driver.findElement(By.id("username"));
-            WebElement password = driver.findElement(By.id("password"));
-            WebElement form = driver.findElement(By.id("form"));
-            Assert.assertTrue(username.isDisplayed());
 
-            username.sendKeys("usernamehere");
-            password.sendKeys("passwordhere");
-            form.submit();
+        try {
+            ((ChromeDriver) driver).findElementByXPath("//*[@id=\"cc-main-content\"]/div[2]/div/div[1]/div[2]/button").click();
+
+            String username = "INSERT_USERNAME_HERE";
+            String password = "INSERT_PASSWORD_HERE";
+            ((ChromeDriver) driver).findElementByXPath("//*[@id=\"username\"]").sendKeys(username);
+            ((ChromeDriver) driver).findElementByXPath("//*[@id=\"password\"]").sendKeys(password);
+            ((ChromeDriver) driver).findElementByXPath("//*[@id=\"loginForm\"]/fieldset/p[4]/input[4]\n").click();
         } catch(NoSuchElementException nsee) {
             System.out.println(":(");
         } catch(AssertionError ae) {
             System.out.println("The table was located, but not displayed.");
         }
-
-
-
-
-        // Go to enrollment
-        wait.until( ExpectedConditions.presenceOfElementLocated(By.name("enrollmentInstruction.links.chooseClasses.name")) );
-        driver.findElement(By.name("enrollmentInstruction.links.chooseClasses.name")).click();
 
 
 
